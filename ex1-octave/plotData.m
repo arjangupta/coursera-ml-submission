@@ -17,8 +17,10 @@ figure; % open a new figure window
 %       markers larger by using plot(..., 'rx', 'MarkerSize', 10);
 
 
-
-
+plot(x,y,'rx','MarkerSize',10); % rx = red x's. Size of marker is 10.
+ylabel('Profit in $10,000s');
+xlabel('Population of city in 10,000s');
+axis([4 24 -5 25])
 
 % ============================================================
 
