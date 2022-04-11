@@ -22,15 +22,15 @@ for iter = 1:num_iters
 
     % Go through and compute the descent for each parameter, store
     % in temporary matrix
-    temp_theta = zeros(size(theta))
-    for param_i = 1:size(n)
+    temp_theta = zeros(size(theta));
+    for param_i = 1:size(theta)
 
-        temp_theta(param_i) = theta(param_i) - (alpha * (1/m) * sum(H-y)*X(:,param_i))
+        temp_theta(param_i) = theta(param_i) - ( alpha * (1/m) * sum((H-y).*(X(:,param_i)') ) );
 
     end
 
     % Assign the parameters (simultaneous update)
-    theta = temp_theta
+    theta = temp_theta;
 
 
     % ============================================================
