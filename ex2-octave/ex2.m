@@ -24,7 +24,11 @@ clear ; close all; clc
 %  contains the label.
 
 data = load('ex2data1.txt');
-X = data(:, [1, 2]); y = data(:, 3);
+X = data(:, [1, 2]);
+y = data(:, 3);
+
+% fprintf('\nProgram paused. Press enter to continue.\n');
+% pause;
 
 %% ==================== Part 1: Plotting ====================
 %  We start the exercise by first plotting the data to understand the 
