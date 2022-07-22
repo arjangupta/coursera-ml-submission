@@ -24,12 +24,14 @@ cost_sum = 0;
 gradient_sum_vec = zeros(size(theta),1); % a vector of sums
 
 for i = 1:m
+    % Set X superscript i
+    X_sup_i = X(i,:)';
     % Calculate the hypothesis
-    h = sigmoid(theta'*(X(i,:)'));
+    h_i = sigmoid(theta'*(X_sup_i));
     % Add to the cost sum
-    cost_sum = cost_sum + ( -y(i)*log(h) - (1-y(i))*log(1-h) );
+    cost_sum = cost_sum + ( -y(i)*log(h_i) - (1-y(i))*log(1-h_i) );
     % Add to the gradient sum
-    gradient_sum_vec = gradient_sum_vec + ( h - y(i) )*X(i,:)';
+    gradient_sum_vec = gradient_sum_vec + ( h_i - y(i) )*X_sup_i;
 end
 
 % Set the cost formula
