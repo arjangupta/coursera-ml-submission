@@ -20,9 +20,23 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
-h = sigmoid(theta'*X);
+cost_sum = 0;
+gradient_sum_vec = zeros(size(theta),1); % a vector of sums
 
-J = (1/m)*(-y*log(h)-(1-y)*log(1-h));
+for i = 1:m
+    % Calculate the hypothesis
+    h = sigmoid(theta'*(X(i,:)'));
+    % Add to the cost sum
+    cost_sum = cost_sum + ( -y(i)*log(h) - (1-y(i))*log(1-h) );
+    % Add to the gradient sum
+    gradient_sum_vec = gradient_sum_vec + ( h - y(i) )*X(i,:)';
+end
+
+% Set the cost formula
+J = (1/m)*cost_sum;
+
+% Set the gradient formula
+grad = (1/m)*gradient_sum_vec
 
 % =============================================================
 
