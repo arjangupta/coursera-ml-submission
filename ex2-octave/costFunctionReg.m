@@ -17,25 +17,33 @@ grad = zeros(size(theta));
 %               Compute the partial derivatives and set grad to the partial
 %               derivatives of the cost w.r.t. each parameter in theta
 
-% Compute cost sum term
+% Compute cost and gradient sum terms
 cost_sum = 0;
-grad_sum = 0;
+grad_sum_vec = zeros(size(theta),1);
 for i = 1:m
     Xi = X(i,:)';
     h_Xi = sigmoid(theta'*Xi);
     cost_sum = cost_sum + ( -y(i) * log( h_Xi ) - (1 - y(i)) * log( 1 - h_Xi ) ); % formula for cost sum
-    grad_sum = grad_sum + ( h_Xi - y(i) ) * Xi; % should give a vector of 28
+    grad_sum_vec = grad_sum_vec + ( h_Xi - y(i) ) * Xi; % should give a vector of 28
 end
 
-% Compute theta square sum term
+% Compute regularization sum term for cost
 theta_sq_sum = 0;
 n = size(theta, 1);
 for i = 1:n
     theta_sq_sum = theta_sq_sum + ( theta(i)^2 );
 end
-theta_sq_sum
 
+% Compute the cost
 J = (1/m) * cost_sum + (lambda/(2*m)) * theta_sq_sum;
+
+% Compute the gradient without regularization
+grad = (1/m)*grad_sum_vec;
+
+% Add the regularization term
+for i = 2:size(grad)
+    grad(i) = grad(i) + (lambda/m)*theta(i);
+end
 
 % =============================================================
 
