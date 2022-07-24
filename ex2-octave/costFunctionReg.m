@@ -30,7 +30,7 @@ end
 % Compute regularization sum term for cost
 theta_sq_sum = 0;
 n = size(theta, 1);
-for i = 1:n
+for i = 2:n
     theta_sq_sum = theta_sq_sum + ( theta(i)^2 );
 end
 
