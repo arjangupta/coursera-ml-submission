@@ -38,7 +38,7 @@ end
 J = (1/m)*cost_sum;
 
 % Set the gradient formula
-grad = (1/m)*gradient_sum_vec
+grad = (1/m)*gradient_sum_vec;
 
 % =============================================================
 
