@@ -49,16 +49,25 @@ X = [ones(m, 1) X];
 %                 initial_theta, options);
 %
 
+% Train num_labels classifiers
+for c = 1:num_labels
+    % Get the 'y' for this class
+    ground_truths = (y == c);
+    % --- Optimizations step for class c ----
+    % Set Initial theta
+    initial_theta = zeros(n + 1, 1);
 
+    % Set options for fminunc
+    options = optimset('GradObj', 'on', 'MaxIter', 50);
 
-
-
-
-
-
-
-
-
+    % Run fmincg to obtain the optimal theta
+    % This function will return theta and the cost
+    [theta] = ...
+        fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), ...
+                initial_theta, options);
+    % Insert this theta into the cth row of all_theta
+    all_theta(c, :) = theta;
+end
 
 % =========================================================================
 
