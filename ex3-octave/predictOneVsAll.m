@@ -30,11 +30,9 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
-
-
-
-
-
+all_probability_matrix = X*(all_theta'); % m x K, each row shows the K probabilities of the feature being class 1 through K
+[val, idx] = max(all_probability_matrix, [], 2);
+p = idx;
 
 % =========================================================================
 
