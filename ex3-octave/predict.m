@@ -21,13 +21,18 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+% Bias units
+column_of_ones = [ones(m, 1)];
 
+% Feedforward propagation
+layer1_result = sigmoid([column_of_ones, X]*Theta1'); % should give 5000 x 25 matrix
+layer2_result = sigmoid([column_of_ones, layer1_result]*Theta2'); % should give 5000 x 10 matrix
 
+% Find the result of each training example
+[val, idx] = max(layer2_result, [], 2);
 
-
-
-
-
+% Return the predictions
+p = idx;
 
 % =========================================================================
 
