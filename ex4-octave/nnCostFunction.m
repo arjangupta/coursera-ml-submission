@@ -66,32 +66,17 @@ Theta2_grad = zeros(size(Theta2));
 % Part 1
 
 % 'Widen' the y, as in make 2 become [0 1 0 0 ... 0], etc
-Y_wide = zeros(size(y,1), num_labels);
-for i = 1:size(y,1)
-    Y_wide( i, y(i) ) = 1;
-end
+Y_wide = eye(m)(y,:); % basically, rearrange an identity matrix of 
 
 % Compute H
 X = [ones(m, 1), X]; % pre-pend a column of 1s (bias units)
-hidden_layer = sigmoid( Theta1 * X');
-hidden_layer = [ones(1,size(X,2)); hidden_layer]; % prepend bias units as a row
-H = sigmoid(Theta2 * hidden_layer);
+hidden_layer = sigmoid( X * Theta1'); % X is m x num_features, Theta is num_hidden_units x (num_features + 1)
+hidden_layer = [ones(m, 1), hidden_layer]; % prepend bias units as a row
+H = sigmoid(hidden_layer * Theta2');
 
 % Vectorized cost function, which will give num_labels * num labels matrix
-vec_cost = (1/m) * ( -Y_wide * log(H') - (1 - Y_wide) * log(1 - H') );
+vec_cost = (1/m) * ( (-(Y_wide) * log(H)) - (1 - Y_wide) * log(1 - H) );
 J = sum(sum(vec_cost));
-
-
-
-
-
-
-
-
-
-
-
-
 
 % -------------------------------------------------------------
 
