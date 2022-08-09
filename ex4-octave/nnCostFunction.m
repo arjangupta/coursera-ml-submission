@@ -80,8 +80,25 @@ for j = 1:num_labels
 J = J + ( Y_wide(i,j) * log(H(i,j)) ) + ( 1 - Y_wide(i,j) ) * log( 1 - H(i,j) );
 end
 end
-% Multiply the remaining factor
+% Multiply the remaining factor for the unregularized cost
 J = (-1/m) * J;
+% Calculate the regularization
+% Sum up all Theta1 elements
+sum_theta1_sqs = 0;
+for j = 1:size(Theta1,1)
+for k = 2:(size(Theta1,2)) %omit the first, bias column
+    sum_theta1_sqs = sum_theta1_sqs + Theta1(j,k).^2;
+end
+end
+sum_theta2_sqs = 0;
+for j = 1:size(Theta2,1)
+for k = 2:(size(Theta2,2)) % omit the first, bias column
+    sum_theta2_sqs = sum_theta2_sqs + Theta2(j,k).^2;
+end
+end
+sq_thetas_sum = (sum_theta1_sqs + sum_theta2_sqs)
+reg_term = (lambda/(2*m))*(sum_theta1_sqs + sum_theta2_sqs);
+J = J + reg_term;
 
 % ------------ Part 2 ----------------
 
