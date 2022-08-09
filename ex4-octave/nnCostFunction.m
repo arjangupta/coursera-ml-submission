@@ -63,7 +63,7 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
-% Part 1
+% ------------ Part 1 ----------------
 
 % 'Widen' the y, as in make 2 become [0 1 0 0 ... 0], etc
 Y_wide = eye(num_labels)(y,:); % basically, rearrange an identity matrix of 
@@ -82,6 +82,10 @@ end
 end
 % Multiply the remaining factor
 J = (-1/m) * J;
+
+% ------------ Part 2 ----------------
+
+
 
 % -------------------------------------------------------------
 
