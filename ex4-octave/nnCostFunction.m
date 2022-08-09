@@ -96,7 +96,7 @@ for k = 2:(size(Theta2,2)) % omit the first, bias column
     sum_theta2_sqs = sum_theta2_sqs + Theta2(j,k).^2;
 end
 end
-sq_thetas_sum = (sum_theta1_sqs + sum_theta2_sqs)
+sq_thetas_sum = (sum_theta1_sqs + sum_theta2_sqs);
 reg_term = (lambda/(2*m))*(sum_theta1_sqs + sum_theta2_sqs);
 J = J + reg_term;
 
