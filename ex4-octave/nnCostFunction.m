@@ -104,13 +104,23 @@ J = J + reg_term;
 
 % Theta1 has size 25 x 401
 % Theta2 has size 10 x 26
+% Y_wide has size 5000 x 10
 
+accumulator = 0
 for t = 1:m
-    % Step 1 - Feedforward pass with current training example x(t)
+    % Step 1 - feedforward pass with current training example x(t)
     a1 = [1 X(t,:)]; % row t of X with pre-pended bias unit
-    a2 = sigmoid( a1 * Theta1' );
-    a2 = [1 a2]; % place bias unit
-    a3 = sigmoid( a2 * Theta2'); % a3 should have dim 1x10
+    z2 = a1 * Theta1'; % dim 1 x 25
+    z2 = [1 z2]; % place bias unit - dim 1 x 26
+    a2 = sigmoid( z2 ); % dim 1 x 26
+    z3 = a2 * Theta2';
+    a3 = sigmoid( z3 ); % a3 should have dim 1x10
+    % Step 2 - output layer diff
+    delta_output = a3 - Y_wide(t) % dim 1 x 10
+    % Step 3 - find hidden layer delta
+    delta_hidden = (delta_output*Theta2).*sigmoidGradient(z2);
+    % TODO: Step 4 - accumulate
+    delta_hidden = delta_hidden(2:end); % remove bias unit
 end
 
 % -------------------------------------------------------------
