@@ -119,11 +119,10 @@ for t = 1:m
     % Step 2 - output layer diff
     delta_3 = a3 - Y_wide(t); % dim 1 x 10
     % Step 3 - find hidden layer delta
-    delta_2 = (delta_3*Theta2).*sigmoidGradient(z2); % dim 1 x 26
+    delta_2 = (delta_3*Theta2)(:,2:end).*sigmoidGradient(z2); % dim 1 x 25
     % Step 4 - accumulate the big_deltas
     % For first layer
-    delta_2 = delta_2(2:end); % remove bias unit - dim is now 1 x 25
-    big_delta_1 = big_delta_1 + ( delta_2' * a1 ) % needs to be same dim as Theta1 - 25 x 401
+    big_delta_1 = big_delta_1 + ( delta_2' * a1 ); % needs to be same dim as Theta1 - 25 x 401
     % For second layer
     big_delta_2 = big_delta_2 + ( delta_3' * a2 ); % needs to be same dim as Theta2 - 10 x 26
 end
