@@ -112,8 +112,8 @@ for t = 1:m
     % Step 1 - feedforward pass with current training example x(t)
     a1 = X(t,:); % row t of X with pre-pended bias unit - dim 1 x 401
     z2 = a1 * Theta1'; % dim 1 x 25
-    a2 = sigmoid( z2 ); % dim 1 x 25
-    a2 = [1 a2]; % place bias unit - dim 1 x 26
+    z2 = [1 z2]; % place bias unit - dim 1 x 26
+    a2 = sigmoid( z2 ); % dim 1 x 26
     z3 = a2 * Theta2';
     a3 = sigmoid( z3 ); % a3 should have dim 1x10
     % Step 2 - output layer diff
@@ -123,7 +123,7 @@ for t = 1:m
     % Step 4 - accumulate the big_deltas
     % For first layer
     delta_2 = delta_2(2:end); % remove bias unit - dim is now 1 x 25
-    big_delta_1 = big_delta_1 + ( delta_2' * a1 ) % needs to be same dim as Theta1 - 25 x 401
+    big_delta_1 = big_delta_1 + ( delta_2' * a1 ); % needs to be same dim as Theta1 - 25 x 401
     % For second layer
     big_delta_2 = big_delta_2 + ( delta_3' * a2 ); % needs to be same dim as Theta2 - 10 x 26
 end
