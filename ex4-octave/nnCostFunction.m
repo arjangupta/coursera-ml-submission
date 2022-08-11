@@ -122,8 +122,10 @@ big_delta_1 = ( delta_2' * a1 ); % needs to be same dim as Theta1 - 25 x 401
 % For second layer
 big_delta_2 = ( delta_3' * a2 ); % needs to be same dim as Theta2 - 10 x 26
 % Step 5 write the theta gradients
-Theta1_grad = (1/m)*big_delta_1;
-Theta2_grad = (1/m)*big_delta_2;
+reg_Theta1 = [ zeros(size( Theta1,1 ), 1), Theta1(:,2:end) ];
+reg_Theta2 = [ zeros(size( Theta2,1 ), 1), Theta2(:,2:end) ];
+Theta1_grad = (1/m)*(big_delta_1 + lambda*reg_Theta1);
+Theta2_grad = (1/m)*(big_delta_2 + lambda*reg_Theta2); 
 
 % -------------------------------------------------------------
 
