@@ -15,10 +15,12 @@ X_poly = zeros(numel(X), p);
 %
 % 
 
+column_reshaped_X = reshape(X, numel(X), 1); 
+X_poly = column_reshaped_X;
 
-
-
-
+for i=2:p
+    X_poly = [X_poly column_reshaped_X.^p];
+end
 
 % =========================================================================
 
