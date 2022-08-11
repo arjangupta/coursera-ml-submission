@@ -59,7 +59,7 @@ for i = 1:m
     training_Y = y(1:i, :);
 
     % Train the partitioned training set
-    training_theta = trainLinearReg(training_X, training_Y, 0);
+    training_theta = trainLinearReg(training_X, training_Y, lambda);
 
     % Calculate training set cost (error)
     error_train(i) = linearRegCostFunction(training_X, training_Y, training_theta, 0);
