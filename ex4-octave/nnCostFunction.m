@@ -82,20 +82,10 @@ a3 = H;
 J = ( Y_wide .* log(H) ) + ( 1 - Y_wide ) .* log( 1 - H );
 J = (-1/m) * sum(sum(J));
 % Calculate the regularization
-% Sum up all Theta1 elements
-sum_theta1_sqs = 0;
-for j = 1:size(Theta1,1)
-for k = 2:(size(Theta1,2)) %omit the first, bias column
-    sum_theta1_sqs = sum_theta1_sqs + Theta1(j,k).^2;
-end
-end
-sum_theta2_sqs = 0;
-for j = 1:size(Theta2,1)
-for k = 2:(size(Theta2,2)) % omit the first, bias column
-    sum_theta2_sqs = sum_theta2_sqs + Theta2(j,k).^2;
-end
-end
-sq_thetas_sum = (sum_theta1_sqs + sum_theta2_sqs);
+reg_Theta1 = [ zeros(size( Theta1,1 ), 1), Theta1(:,2:end) ];
+reg_Theta2 = [ zeros(size( Theta2,1 ), 1), Theta2(:,2:end) ];
+sum_theta1_sqs = sum(sum(reg_Theta1.^2));
+sum_theta2_sqs = sum(sum(reg_Theta2.^2));
 reg_term = (lambda/(2*m))*(sum_theta1_sqs + sum_theta2_sqs);
 J = J + reg_term;
 
@@ -120,8 +110,6 @@ big_delta_1 = ( delta_2' * a1 ); % needs to be same dim as Theta1 - 25 x 401
 % For second layer
 big_delta_2 = ( delta_3' * a2 ); % needs to be same dim as Theta2 - 10 x 26
 % Step 5 write the theta gradients
-reg_Theta1 = [ zeros(size( Theta1,1 ), 1), Theta1(:,2:end) ];
-reg_Theta2 = [ zeros(size( Theta2,1 ), 1), Theta2(:,2:end) ];
 Theta1_grad = (1/m)*(big_delta_1 + lambda*reg_Theta1);
 Theta2_grad = (1/m)*(big_delta_2 + lambda*reg_Theta2); 
 
