@@ -110,14 +110,17 @@ J = J + reg_term;
 % Theta2 has size 10 x 26
 % Y_wide has size 5000 x 10
 % a1 has size 5000 x 401
+% z2 has size 5000 x 25
+% a2 has size 5000 x 26
 
 % Step 1 already done above.
 % Step 2 - output layer diff
 delta_3 = a3 - Y_wide; % dim 5000 x 10
 % Step 3 - find hidden layer delta
-delta_2 = (delta_3*Theta2)(:,2:end).*sigmoidGradient(z2); % dim 5000 x 25
+delta_2 = (delta_3*Theta2).*sigmoidGradient([ones(size(z2,1), 1), z2]); % dim 5000 x 26
 % Step 4 - accumulate the big_deltas
 % For first layer
+delta_2 = delta_2(:,2:end);
 big_delta_1 = ( delta_2' * a1 ); % needs to be same dim as Theta1 - 25 x 401
 % For second layer
 big_delta_2 = ( delta_3' * a2 ); % needs to be same dim as Theta2 - 10 x 26
