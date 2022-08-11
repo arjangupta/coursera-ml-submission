@@ -78,14 +78,9 @@ z3 = a2 * Theta2';
 H = sigmoid ( z3 );
 a3 = H;
 
-% Iteratively compute cost
-for i = 1:m
-for j = 1:num_labels
-J = J + ( Y_wide(i,j) * log(H(i,j)) ) + ( 1 - Y_wide(i,j) ) * log( 1 - H(i,j) );
-end
-end
-% Multiply the remaining factor for the unregularized cost
-J = (-1/m) * J;
+% Compute cost - vectorized
+J = ( Y_wide .* log(H) ) + ( 1 - Y_wide ) .* log( 1 - H );
+J = (-1/m) * sum(sum(J));
 % Calculate the regularization
 % Sum up all Theta1 elements
 sum_theta1_sqs = 0;
