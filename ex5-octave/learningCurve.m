@@ -53,11 +53,19 @@ error_val   = zeros(m, 1);
 
 % ---------------------- Sample Solution ----------------------
 
+for i = 1:m
+    % Define training set X, Y
+    training_X = X(1:i, :);
+    training_Y = y(1:i, :);
 
+    % Train the partitioned training set
+    training_theta = trainLinearReg(training_X, training_Y, 0);
 
-
-
-
+    % Calculate training set cost (error)
+    error_train(i) = linearRegCostFunction(training_X, training_Y, training_theta, 0);
+    % CV error
+    error_val(i) = linearRegCostFunction(Xval, yval, training_theta, 0);
+end
 
 % -------------------------------------------------------------
 
