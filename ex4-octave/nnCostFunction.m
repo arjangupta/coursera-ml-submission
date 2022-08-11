@@ -70,9 +70,13 @@ Y_wide = eye(num_labels)(y,:); % basically, rearrange an identity matrix of
 
 % Compute H
 X = [ones(m, 1), X]; % pre-pend a column of 1s (bias units)
-hidden_layer = sigmoid( X * Theta1'); % X is m x num_features, Theta is num_hidden_units x (num_features + 1)
-hidden_layer = [ones(m, 1), hidden_layer]; % prepend bias units as a row
-H = sigmoid(hidden_layer * Theta2');
+a1 = X;
+z2 = X * Theta1';
+a2 = sigmoid( z2 ); % X is m x num_features, Theta is num_hidden_units x (num_features + 1)
+a2 = [ones(m, 1), a2]; % prepend bias units as a row
+z3 = a2 * Theta2';
+H = sigmoid ( z3 );
+a3 = H;
 
 % Iteratively compute cost
 for i = 1:m
@@ -105,28 +109,19 @@ J = J + reg_term;
 % Theta1 has size 25 x 401
 % Theta2 has size 10 x 26
 % Y_wide has size 5000 x 10
+% a1 has size 5000 x 401
 
-big_delta_2 = 0;
-big_delta_1 = 0;
-for t = 1:m
-    % Step 1 - feedforward pass with current training example x(t)
-    a1 = X(t,:); % row t of X with pre-pended bias unit - dim 1 x 401
-    z2 = a1 * Theta1'; % dim 1 x 25
-    a2 = sigmoid( z2 ); % dim 1 x 25
-    a2 = [1 a2]; % place bias unit - dim 1 x 26
-    z3 = a2 * Theta2';
-    a3 = sigmoid( z3 ); % a3 should have dim 1x10
-    % Step 2 - output layer diff
-    delta_3 = a3 - Y_wide(t); % dim 1 x 10
-    % Step 3 - find hidden layer delta
-    delta_2 = (delta_3*Theta2)(:,2:end).*sigmoidGradient(z2); % dim 1 x 25
-    % Step 4 - accumulate the big_deltas
-    % For first layer
-    big_delta_1 = big_delta_1 + ( delta_2' * a1 ); % needs to be same dim as Theta1 - 25 x 401
-    % For second layer
-    big_delta_2 = big_delta_2 + ( delta_3' * a2 ); % needs to be same dim as Theta2 - 10 x 26
-end
-
+% Step 1 already done above.
+% Step 2 - output layer diff
+delta_3 = a3 - Y_wide; % dim 5000 x 10
+% Step 3 - find hidden layer delta
+delta_2 = (delta_3*Theta2)(:,2:end).*sigmoidGradient(z2); % dim 5000 x 25
+% Step 4 - accumulate the big_deltas
+% For first layer
+big_delta_1 = ( delta_2' * a1 ); % needs to be same dim as Theta1 - 25 x 401
+% For second layer
+big_delta_2 = ( delta_3' * a2 ); % needs to be same dim as Theta2 - 10 x 26
+% Step 5 write the theta gradients
 Theta1_grad = (1/m)*big_delta_1;
 Theta2_grad = (1/m)*big_delta_2;
 
