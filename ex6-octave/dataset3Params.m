@@ -41,7 +41,7 @@ base_multiplicand_sigma = sigma;
 
 for i = 1:8
     % Change C
-    if (rem(i/2) == 0)
+    if (rem(i, 2) == 0)
         base_multiplicand_C *= 10;
         C = base_multiplicand_C;
     else
@@ -50,7 +50,7 @@ for i = 1:8
 
     for j = 1:8
         % Change sigma
-        if (rem(j/2) == 0)
+        if (rem(j, 2) == 0)
             base_multiplicand_sigma *= 10;
             sigma = base_multiplicand_sigma;
         else
