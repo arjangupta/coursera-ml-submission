@@ -23,39 +23,16 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
-C = 0.01;
-sigma = 0.01;
+values = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+min_err = 0;
+best_C = 0;
+best_sigma = 0;
 
-% Train and evaluate C and sigma with these initial values
-model = svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
-predictions = svmPredict(model, Xval);
-err = mean(double(predictions ~= yval));
-
-% Set this as the minimum error seen so far, and best C and sigma so far
-min_err = err;
-best_C = C;
-best_sigma = sigma;
-
-base_multiplicand_C = C;
-base_multiplicand_sigma = sigma;
-
-for i = 1:8
-    % Change C
-    if (rem(i, 2) == 0)
-        base_multiplicand_C *= 10;
-        C = base_multiplicand_C;
-    else
-        C = 3 * base_multiplicand_C;
-    endif
-
-    for j = 1:8
-        % Change sigma
-        if (rem(j, 2) == 0)
-            base_multiplicand_sigma *= 10;
-            sigma = base_multiplicand_sigma;
-        else
-            sigma = 3 * base_multiplicand_sigma;
-        endif
+for i = 1:length(values)
+    for j = 1:length(values)
+        % Set C and sigma
+        C = values(i)
+        sigma = values(j)
 
         % Train and evaluate C and sigma
         model = svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
@@ -63,7 +40,7 @@ for i = 1:8
         err = mean(double(predictions ~= yval));
 
         % If error is lowest ever, then record this
-        if (err < min_err)
+        if (err < min_err || (i == 1 && j == 1))
             min_err = err;
             best_C = C;
             best_sigma = sigma;
