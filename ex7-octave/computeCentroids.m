@@ -35,7 +35,7 @@ for i = 1:m
     for j = 1:K
         % Go through all examples and add to a running sum
         if (idx(i) == j)
-            centroid(j,:) = centroid(j,:) + X(i,:);
+            centroids(j,:) = centroids(j,:) + X(i,:);
             num_examples_per_centroid(j) += 1;
         endif
     end
@@ -43,7 +43,7 @@ end
 
 % Calculate the means
 for j = 1:K
-    centroid(j,:) = sum(centroid(j,:)) / num_examples_per_centroid(j);
+    centroids(j,:) = sum(centroids(j,:)) / num_examples_per_centroid(j);
 end
 
 % =============================================================
