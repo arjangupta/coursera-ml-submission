@@ -48,15 +48,8 @@ x = zeros(n, 1);
 %
 %
 
-vocabList = getVocabList();
-file_contents = readFile('spamSample1.txt');
-
 for i = 1:size(word_indices)
-    for j = 1:size(file_contents)
-        if (strcmp(vocabList{word_indices(i)}, file_contents(j)))
-            x(i) = 1;
-        endif
-    end
+    x(i) = 1;
 end
 
 % =========================================================================
