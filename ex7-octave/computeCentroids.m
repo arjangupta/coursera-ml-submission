@@ -26,12 +26,25 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+% idx (m x 1) is the vector that stores the centroid index (can take on values 1:K) of each example X(i)
 
+num_examples_per_centroid = zeros(K,1);
 
+% Calculate the sums
+for i = 1:m
+    for j = 1:K
+        % Go through all examples and add to a running sum
+        if (idx(i) == j)
+            centroid(j,:) = centroid(j,:) + X(i,:);
+            num_examples_per_centroid(j) += 1;
+        endif
+    end
+end
 
-
-
-
+% Calculate the means
+for j = 1:K
+    centroid(j,:) = sum(centroid(j,:)) / num_examples_per_centroid(j);
+end
 
 % =============================================================
 
