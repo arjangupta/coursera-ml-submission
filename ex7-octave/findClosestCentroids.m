@@ -21,11 +21,15 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-
-
-
-
-
+for i = 1:size(X, 1)
+    for j = 1:K
+        % Compare X(i) with each centroid(i) and record the minimum
+        distance = sum((X(i) - centroid(j)).^2);
+        if (distance < idx(i) || i == 1)
+            idx(i) = centroid(j)
+        endif
+    end
+end
 
 % =============================================================
 
