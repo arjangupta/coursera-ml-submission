@@ -43,7 +43,11 @@ end
 
 % Calculate the means
 for j = 1:K
-    centroids(j,:) = sum(centroids(j,:)) / num_examples_per_centroid(j);
+    if (num_examples_per_centroid != 0)
+        centroids(j,:) = centroids(j,:) / num_examples_per_centroid(j);
+    else
+        centroids(j,:) = 0;
+    endif
 end
 
 % =============================================================
