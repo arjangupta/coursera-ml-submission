@@ -23,17 +23,32 @@ for epsilon = min(pval):stepsize:max(pval)
     % Note: You can use predictions = (pval < epsilon) to get a binary vector
     %       of 0's and 1's of the outlier predictions
 
+    % Calculate the true pos, false pos, false neg
+    tp = sum(yval == (pval < epsilon));
+    fp = sum(yval == (pval >= epsilon));
+    fn = sum((!yval) == (pval < epsilon));
 
+    if ((tp + fp) == 0 && (tp + fn) == 0)
+        precision = 0;
+        recall = 0;
+    elseif (((tp + fp) == 0) && (tp + fn) != 0)
+        precision = 0;
+        recall = tp/(tp + fn);
+    elseif (((tp + fp) != 0) && (tp + fn) == 0)
+        precision = tp/(tp + fp);
+        recall = 0;
+    else
+        % precision and recall
+        precision = tp/(tp + fp);
+        recall = tp/(tp + fn);
+    endif
 
-
-
-
-
-
-
-
-
-
+    % F1 score
+    if (precision == 0 && recall == 0)
+        F1 = 0;
+    else
+        F1 = (2*precision*recall)/(precision + recall);
+    endif
 
     % =============================================================
 
