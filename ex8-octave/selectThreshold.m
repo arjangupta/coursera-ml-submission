@@ -23,10 +23,13 @@ for epsilon = min(pval):stepsize:max(pval)
     % Note: You can use predictions = (pval < epsilon) to get a binary vector
     %       of 0's and 1's of the outlier predictions
 
+    % Get ground truth vector
+    predictions = (pval < epsilon);
+
     % Calculate the true pos, false pos, false neg
-    tp = sum(yval == (pval < epsilon));
-    fp = sum(yval == (pval >= epsilon));
-    fn = sum((!yval) == (pval < epsilon));
+    tp = sum(predictions & yval);
+    fp = sum(predictions & !yval);
+    fn = sum(!predictions & yval);
 
     if ((tp + fp) == 0 && (tp + fn) == 0)
         precision = 0;
