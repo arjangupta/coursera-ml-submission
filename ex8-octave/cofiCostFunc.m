@@ -40,20 +40,11 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+% Calculate H
+H = X*Theta'; % dim: num_movies x num_users
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+% Cost
+J = (0.5)*sum(sum(((H.*R) - Y).^2));
 
 % =============================================================
 
