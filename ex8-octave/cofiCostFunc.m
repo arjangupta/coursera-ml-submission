@@ -46,6 +46,10 @@ H = X*Theta'; % dim: num_movies x num_users
 % Cost
 J = (0.5)*sum(sum(((H.*R) - Y).^2));
 
+% Grads
+X_grad = ((H.*R) - Y)*Theta;
+Theta_grad = ((H.*R) - Y)'*X;
+
 % =============================================================
 
 grad = [X_grad(:); Theta_grad(:)];
