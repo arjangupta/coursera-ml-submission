@@ -44,11 +44,11 @@ Theta_grad = zeros(size(Theta));
 H = X*Theta'; % dim: num_movies x num_users
 
 % Cost
-J = (0.5)*sum(sum(((H.*R) - Y).^2));
+J = (0.5)*sum(sum(((H.*R) - Y).^2)) + (lambda/2)*sum(sum(Theta.^2)) + (lambda/2)*sum(sum(X.^2))
 
 % Grads
-X_grad = ((H.*R) - Y)*Theta;
-Theta_grad = ((H.*R) - Y)'*X;
+X_grad = ((H.*R) - Y)*Theta + lambda*X;
+Theta_grad = ((H.*R) - Y)'*X + lambda*Theta;
 
 % =============================================================
 
